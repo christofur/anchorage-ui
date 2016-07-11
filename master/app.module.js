@@ -12,7 +12,8 @@
 
     angular
         .module('anchorage', [
-            'app.core'
+            'app.core',
+            'app.router'
         ]);
 })();
 
