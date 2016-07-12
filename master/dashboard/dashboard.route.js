@@ -2,19 +2,17 @@
     'use strict';
 
     angular
-        .module('app.dashboard')
+        .module('app.core')
         .run(dashboardRoute);
 
     dashboardRoute.$inject = ['Router'];
 
     function dashboardRoute(Router){
 
-        Router.state('app.dashboard', {
+        Router.state('dashbaord', {
             url: '/dashboard',
             title: 'Dashboard',
-            templateUrl: 'dashboard.html',
-            require: []
-        })
-
+            templateUrl: 'dashboard.html'
+        });
     }
 })();

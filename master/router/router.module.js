@@ -4,7 +4,7 @@
     angular
         .module('app.router', [
             'ui.router',
-            'oc.lazyload'
+            'oc.lazyLoad'
         ]);
 
 })();

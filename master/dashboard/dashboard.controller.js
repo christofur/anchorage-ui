@@ -5,7 +5,7 @@
         .module('app.dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject['$scope']
+    DashboardController.$inject = ['$scope']
 
     function DashboardController($scope){
         var vm = this;

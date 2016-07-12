@@ -5,7 +5,7 @@
         .module('app.router')
         .config(routerConfig);
 
-    routerConfig.$inject['$ocLazyLoadProvider','APP_REQUIRES'];
+    routerConfig.$inject = ['$ocLazyLoadProvider','APP_REQUIRES'];
 
     function routerConfig($ocLazyLoadProvider, APP_REQUIRES){
 

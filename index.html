@@ -15,14 +15,17 @@
 </head>
 <body>
     <div data-preloader></div>
-    <div data-ui-view="" data-autoscroll="false" data-ng-class="layout()" class="layout-container"></div>
+    <div ui-view data-autoscroll="false" data-ng-class="layout()" class="layout-container"></div>
 
-    <!-- build:vendor(..) app/js/vendor.js-->
+    <!-- vendor -->
     <script src="vendor/modernizr/modernizr.custom.js"></script>
     <script src="vendor/jquery/dist/jquery.min.js"></script>
     <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="vendor/oclazyload/dist/ocLazyLoad.js"></script>
     <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <!-- endbuild-->
+    <script src="vendor/angular-route/angular-route.js"></script>
+    <!-- end vendor-->
 
     <!-- custom js for app -->
     <script src="app/js/app.js"></script>
