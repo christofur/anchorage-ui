@@ -254,8 +254,6 @@
 	                if (options.templateUrl && config.useViewsBasePath)
 	                    options.templateUrl = this.viewpath(options.templateUrl);
 
-	                console.info(name);
-	                console.info(options);
 	                $stateProvider.state(name, options);
 
 	                // allow chain execution
@@ -352,9 +350,7 @@
 	    'use strict';
 
 	    angular
-	        .module('app.dashboard', [
-	            'app.router'
-	        ]);
+	        .module('app.dashboard', []);
 	})();
 
 /***/ },
@@ -384,7 +380,7 @@
 	    'use strict';
 
 	    angular
-	        .module('app.core')
+	        .module('app.dashboard')
 	        .run(dashboardRoute);
 
 	    dashboardRoute.$inject = ['Router'];
@@ -418,19 +414,9 @@
 	    angular
 	        .module('anchorage', [
 	            'app.core',
-	            'app.router'
+	            'app.router',
+	            'app.dashboard'
 	        ]);
-
-	/*    angular
-	        .module('anchorage')
-	        .config(function($stateProvider){
-
-	            $stateProvider
-	                .state('route1', {
-	                    url: "/dashboard",
-	                    templateUrl: "app/views/dashboard.html"
-	                });
-	        })*/
 
 	})();
 

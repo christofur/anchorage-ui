@@ -13,19 +13,9 @@
     angular
         .module('anchorage', [
             'app.core',
-            'app.router'
+            'app.router',
+            'app.dashboard'
         ]);
-
-/*    angular
-        .module('anchorage')
-        .config(function($stateProvider){
-
-            $stateProvider
-                .state('route1', {
-                    url: "/dashboard",
-                    templateUrl: "app/views/dashboard.html"
-                });
-        })*/
 
 })();
 

@@ -68,8 +68,6 @@
                 if (options.templateUrl && config.useViewsBasePath)
                     options.templateUrl = this.viewpath(options.templateUrl);
 
-                console.info(name);
-                console.info(options);
                 $stateProvider.state(name, options);
 
                 // allow chain execution
