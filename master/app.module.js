@@ -14,7 +14,9 @@
         .module('anchorage', [
             'app.core',
             'app.router',
-            'app.dashboard'
+            'app.dashboard',
+            'app.header',
+            'app.settings'
         ]);
 
 })();

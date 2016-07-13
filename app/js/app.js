@@ -387,7 +387,7 @@
 
 	    function dashboardRoute(Router){
 
-	        Router.state('app.dashbaord', {
+	        Router.state('dashbaord', {
 	            url: '/dashboard',
 	            title: 'Dashboard',
 	            templateUrl: 'dashboard.html'
@@ -415,7 +415,9 @@
 	        .module('anchorage', [
 	            'app.core',
 	            'app.router',
-	            'app.dashboard'
+	            'app.dashboard',
+	            'app.header',
+	            'app.settings'
 	        ]);
 
 	})();

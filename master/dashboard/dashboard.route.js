@@ -9,7 +9,7 @@
 
     function dashboardRoute(Router){
 
-        Router.state('app.dashbaord', {
+        Router.state('dashbaord', {
             url: '/dashboard',
             title: 'Dashboard',
             templateUrl: 'dashboard.html'
