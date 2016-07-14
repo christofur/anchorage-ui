@@ -9,7 +9,6 @@
 
     function RouterProvider($locationProvider, $stateProvider, $urlRouterProvider) {
 
-
         var config = {
             // The paths where html template resides
             viewsBasePath: 'app/views/',

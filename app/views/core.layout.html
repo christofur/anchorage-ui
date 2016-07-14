@@ -1,7 +1,8 @@
 <!-- navbar -->
 <header ng-include="'app/views/header.html'" class="header-container"></header>
 <!-- sidebar -->
-<aside></aside>
+<!-- sidebar-->
+<aside ng-include="'app/views/sidebar.html'" class="sidebar-container"></aside>
 <div></div>
 <!-- main area -->
 <main>
@@ -9,7 +10,6 @@
     <span>Start Page Content</span>
     <section ui-view="" ng-class="app.viewAnimation"></section>
     <span>End Page Content</span>
-    <a ui-sref="app.dashboard" >Go to Dashboard</a>
     <!-- page footer -->
     <footer>
         <span>Anchorage Footer</span>

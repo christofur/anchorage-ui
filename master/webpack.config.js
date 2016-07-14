@@ -21,6 +21,14 @@ module.exports = {
         './settings/settings.module.js',
         './settings/settings.run.js',
 
+        './sidebar/sidebar.module.js',
+        './sidebar/sidebar.directive.js',
+        './sidebar/sidebar.run.js',
+
+        './menu/menu.module.js',
+        './menu/menu.controller.js',
+        './menu/menu.service.js',
+
         './app.module.js'
     ],
     output: {

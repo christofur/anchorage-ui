@@ -16,7 +16,8 @@
             'app.router',
             'app.dashboard',
             'app.header',
-            'app.settings'
+            'app.settings',
+            'app.menu'
         ]);
 
 })();

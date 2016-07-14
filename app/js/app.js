@@ -58,7 +58,13 @@
 	__webpack_require__(12);
 	__webpack_require__(13);
 	__webpack_require__(14);
-	module.exports = __webpack_require__(15);
+	__webpack_require__(15);
+	__webpack_require__(16);
+	__webpack_require__(17);
+	__webpack_require__(18);
+	__webpack_require__(19);
+	__webpack_require__(20);
+	module.exports = __webpack_require__(21);
 
 
 /***/ },
@@ -132,7 +138,6 @@
 	    RouterProvider.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];
 
 	    function RouterProvider($locationProvider, $stateProvider, $urlRouterProvider) {
-
 
 	        var config = {
 	            // The paths where html template resides
@@ -615,6 +620,246 @@
 /* 15 */
 /***/ function(module, exports) {
 
+	(function () {
+	    'use strict';
+
+	    angular
+	        .module('app.sidebar', []);
+	})();
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	(function () {
+	    'use strict';
+
+
+	    angular.module('app.sidebar')
+	        .directive('sidebarNav', sidebarNav);
+
+	    sidebarNav.$inject = [];
+
+	    function sidebarNav() {
+	        return {
+	            restrict: 'EAC',
+	            link: link
+	        };
+
+	        function link(scope, element) {
+
+	            element.on('click', function(event) {
+	                var item = getItemElement(event);
+	                // check click is on a tag
+	                if (!item) return;
+
+	                var ele = angular.element(item),
+	                    liparent = ele.parent()[0];
+
+	                var lis = ele.parent().parent().children(); // markup: ul > li > a
+	                // remove .active from childs
+	                lis.find('li').removeClass('active');
+	                // remove .active from siblings ()
+	                angular.forEach(lis, function(li) {
+	                    if (li !== liparent)
+	                        angular.element(li).removeClass('active');
+	                });
+
+	                var next = ele.next();
+	                if (next.length && next[0].tagName === 'UL') {
+	                    ele.parent().toggleClass('active');
+	                    event.preventDefault();
+	                }
+	            });
+
+	        }
+
+	        // find the a element in click context
+	        // doesn't check deeply, asumens two levels only
+	        function getItemElement(event) {
+	            var element = event.target,
+	                parent = element.parentNode;
+	            if (element.tagName.toLowerCase() === 'a') return element;
+	            if (parent.tagName.toLowerCase() === 'a') return parent;
+	            if (parent.parentNode.tagName.toLowerCase() === 'a') return parent.parentNode;
+	        }
+	    }
+
+	})();
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	(function () {
+
+	    angular
+	        .module('app.sidebar')
+	        .run(sidebarRun);
+
+	    sidebarRun.$inject = ['$rootScope', '$window', '$document', '$timeout', 'APP_MEDIAQUERY'];
+
+	    function sidebarRun($rootScope, $window, $document, $timeout, APP_MEDIAQUERY) {
+	        // Sidebar API for mobile
+	        $rootScope.toggleSidebar = toggleSidebarState;
+	        $rootScope.closeSidebar = function() {
+	            toggleSidebarState(false);
+	        };
+	        $rootScope.openSidebar = function() {
+	            toggleSidebarState(true);
+	        };
+
+	        // Sidebar offcanvas API for desktops
+	        $rootScope.toggleSidebarOffcanvasVisible = function(state) {
+	            $rootScope.sidebarOffcanvasVisible = angular.isDefined(state) ? state : !$rootScope.sidebarOffcanvasVisible;
+	        };
+
+	        // ESC key close sidebar
+	        $document.on('keyup',function(e) {
+	            if (e.keyCode == 27) {
+	                $timeout(function() {
+	                    $rootScope.toggleSidebarOffcanvasVisible(false);
+	                });
+	            }
+	        });
+
+	        // Considerations for different APP states
+
+	        // on mobiles, sidebar starts off-screen
+	        if (isMobileScreen()) $timeout(function() {
+	            toggleSidebarState(false);
+	        });
+
+	        // hide sidebar when open a new view
+	        $rootScope.$on('$stateChangeStart', function() {
+	            if (isMobileScreen())
+	                toggleSidebarState(false);
+	            // Always hide offscreen sidebar when route change
+	            else
+	                $rootScope.toggleSidebarOffcanvasVisible(false);
+	        });
+
+	        // remove desktop offcanvas when app changes to mobile
+	        // so when it returns, the sidebar is shown again
+	        $window.addEventListener('resize', function() {
+	            if (isMobileScreen())
+	                $rootScope.toggleSidebarOffcanvasVisible(false);
+	        });
+
+	        ///////
+
+	        function toggleSidebarState(state) {
+	            //  state === true -> open
+	            //  state === false -> close
+	            //  state === undefined -> toggle
+	            $rootScope.sidebarVisible = angular.isDefined(state) ? state : !$rootScope.sidebarVisible;
+	        }
+
+	        function isMobileScreen() {
+	            return $window.innerWidth < APP_MEDIAQUERY.desktop;
+	        }
+	    }
+
+	})();
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	(function () {
+	    'use strict';
+
+	    angular.module('app.menu',
+	        []);
+	})();
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	(function () {
+	    'use strict';
+
+	    angular.module('app.menu')
+	        .controller('MenuController', MenuController);
+
+	    MenuController.$inject = ['Menu']
+
+
+	    function MenuController(Menu){
+
+	        var vm = this;
+
+	        activate();
+
+	        function activate(){
+	            vm.items = Menu.getItems();
+
+	            //Dummy code
+	            var menuItem = {
+	                name: 'Dashboard',
+	                sref: 'app.dashboard',
+	                order: 1,
+	                // iconclass: 'ion-radio-waves',
+	                imgpath: 'app/img/icons/radio-waves.svg'
+	            };
+
+	            Menu.addItem(menuItem);
+
+	        }
+
+
+
+	    }
+
+	})();
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	(function () {
+
+	    angular
+	        .module('app.menu')
+	        .service('Menu', MenuService);
+
+	    function MenuService(){
+
+	        var vm = this;
+
+	        vm.getItems = getItems;
+	        vm.addItem = addItem;
+	        vm.menu = [];
+
+	        function getItems(){
+	            return vm.menu;
+	        }
+
+	        function addItem(item){
+	            validate(item);
+	            vm.menu.push(item);
+	        }
+
+	        function validate(item){
+	            if (!angular.isDefined(item))
+	                throw new Error('Menu item not defined.');
+	            if (!angular.isDefined(item.name))
+	                throw new Error('Menu item name not defined.');
+	            if (!angular.isDefined(item.order))
+	                item.order = 0; // order must exists
+	            // item ok
+	            return item;
+	        }
+
+	    }
+
+	})();
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
 	/*!
 	 *
 	 * Anchorage-UI
@@ -633,7 +878,8 @@
 	            'app.router',
 	            'app.dashboard',
 	            'app.header',
-	            'app.settings'
+	            'app.settings',
+	            'app.menu'
 	        ]);
 
 	})();
