@@ -4,7 +4,8 @@
     angular
         .module('app.core', [
             'app.router',
-            'ngRoute'
+            'ngRoute',
+            'ui.bootstrap'
         ]);
 
 })();

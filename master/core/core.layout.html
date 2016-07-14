@@ -1,14 +1,16 @@
 <!-- navbar -->
-<header ng-include="" class="header-container"></header>
+<header ng-include="'app/views/header.html'" class="header-container"></header>
 <!-- sidebar -->
 <aside></aside>
 <div></div>
 <!-- main area -->
 <main>
     <!-- page content -->
+    <span>Start Page Content</span>
     <section ui-view="" ng-class="app.viewAnimation"></section>
+    <span>End Page Content</span>
     <!-- page footer -->
     <footer>
-        <span>Anchorage</span>
+        <span>Anchorage Footer</span>
     </footer>
 </main>

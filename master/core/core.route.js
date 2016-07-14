@@ -8,9 +8,10 @@
     coreRoute.$inject = ['Router'];
 
     function coreRoute(Router){
+
         Router.state('app', {
-            url: '/app',
-            abstract: true,
+            url: '/app/',
+            abstract: false,
             templateUrl: 'core.layout.html'
         });
     }

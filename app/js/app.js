@@ -54,77 +54,15 @@
 	__webpack_require__(8);
 	__webpack_require__(9);
 	__webpack_require__(10);
-	module.exports = __webpack_require__(11);
+	__webpack_require__(11);
+	__webpack_require__(12);
+	__webpack_require__(13);
+	__webpack_require__(14);
+	module.exports = __webpack_require__(15);
 
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
-
-	(function(){
-	    'use strict';
-
-	    angular
-	        .module('app.core', [
-	            'app.router',
-	            'ngRoute'
-	        ]);
-
-	})();
-
-/***/ },
-/* 2 */
-/***/ function(module, exports) {
-
-	(function(){
-	    'use strict';
-
-	    angular
-	        .module('app.core')
-	        .config(coreConfig);
-
-	    coreConfig.$inject = ['$controllerProvider','$compileProvider','$filterProvider','$provide'];
-
-	    function coreConfig($controllerProvider, $compileProvider, $filterProvider, $provide){
-	        var core = angular.module('app.core');
-
-	        //register components
-
-	        core.controller = $controllerProvider.register;
-	        core.directive = $compileProvider.directive;
-	        core.filter = $filterProvider.register;
-	        core.factory = $provide.factory;
-	        core.service = $provide.service;
-	        core.constant = $provide.constant;
-	        core.value = $provide.value;
-	    }
-
-	})();
-
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	(function(){
-	    'use strict';
-
-	    angular
-	        .module('app.core')
-	        .run(coreRoute);
-
-	    coreRoute.$inject = ['Router'];
-
-	    function coreRoute(Router){
-	        Router.state('app', {
-	            url: '/app',
-	            abstract: true,
-	            templateUrl: 'core.layout.html'
-	        });
-	    }
-	})();
-
-/***/ },
-/* 4 */
 /***/ function(module, exports) {
 
 	(function(){
@@ -139,7 +77,7 @@
 	})();
 
 /***/ },
-/* 5 */
+/* 2 */
 /***/ function(module, exports) {
 
 	(function(){
@@ -156,7 +94,7 @@
 	})();
 
 /***/ },
-/* 6 */
+/* 3 */
 /***/ function(module, exports) {
 
 	(function(){
@@ -181,7 +119,7 @@
 	})();
 
 /***/ },
-/* 7 */
+/* 4 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -205,14 +143,13 @@
 	            // You may have to set <base> tag in index and a routing configuration in your server
 	            html5Mode: false,
 	            // defaults to dashboard
-	            defaultRoute: 'dashboard'
+	            defaultRoute: 'app/'
 	        };
 
 	        // public access to change configuration
 	        this.configure = function(cfg) {
 	            angular.extend(config, cfg);
 	        };
-
 
 	        $locationProvider.html5Mode(config.html5Mode);
 
@@ -224,9 +161,6 @@
 
 	        function Router($rootScope, $state, $stateParams, APP_REQUIRES) {
 	            /* jshint validthis:true */
-
-
-
 
 	            var service = {
 	                // service access level
@@ -343,6 +277,74 @@
 
 
 /***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	(function(){
+	    'use strict';
+
+	    angular
+	        .module('app.core', [
+	            'app.router',
+	            'ngRoute',
+	            'ui.bootstrap'
+	        ]);
+
+	})();
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	(function(){
+	    'use strict';
+
+	    angular
+	        .module('app.core')
+	        .config(coreConfig);
+
+	    coreConfig.$inject = ['$controllerProvider','$compileProvider','$filterProvider','$provide'];
+
+	    function coreConfig($controllerProvider, $compileProvider, $filterProvider, $provide){
+	        var core = angular.module('app.core');
+
+	        //register components
+
+	        core.controller = $controllerProvider.register;
+	        core.directive = $compileProvider.directive;
+	        core.filter = $filterProvider.register;
+	        core.factory = $provide.factory;
+	        core.service = $provide.service;
+	        core.constant = $provide.constant;
+	        core.value = $provide.value;
+	    }
+
+	})();
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	(function(){
+	    'use strict';
+
+	    angular
+	        .module('app.core')
+	        .run(coreRoute);
+
+	    coreRoute.$inject = ['Router'];
+
+	    function coreRoute(Router){
+
+	        Router.state('app', {
+	            url: '/app/',
+	            abstract: false,
+	            templateUrl: 'core.layout.html'
+	        });
+	    }
+	})();
+
+/***/ },
 /* 8 */
 /***/ function(module, exports) {
 
@@ -387,8 +389,8 @@
 
 	    function dashboardRoute(Router){
 
-	        Router.state('dashbaord', {
-	            url: '/dashboard',
+	        Router.state('app.dashboard', {
+	            url: 'dashboard/',
 	            title: 'Dashboard',
 	            templateUrl: 'dashboard.html'
 	        });
@@ -397,6 +399,220 @@
 
 /***/ },
 /* 11 */
+/***/ function(module, exports) {
+
+	(function(){
+	    'use strict';
+
+	    angular.module('app.header',
+	        []);
+
+	})();
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	(function() {
+	    'use strict';
+
+	    angular
+	        .module('app.header')
+	        .controller('HeaderController', HeaderController)
+	        .controller('HeaderModalController', HeaderModalController)
+	        .controller('HeaderModalSearchController', HeaderModalSearchController);
+
+	    HeaderController.$inject = ['$uibModal'];
+
+	    function HeaderController($uibModal) {
+	        var vm = this;
+
+	        activate();
+
+	        ////////////////
+
+	        function activate() {
+	            // Header Search
+	            vm.openModalSearch = function() {
+
+	                var modalSearchInstance = $uibModal.open({
+	                    animation: true,
+	                    templateUrl: 'app/views/header-search.html',
+	                    controller: 'HeaderModalSearchController as mod',
+	                    // position via css class
+	                    windowClass: 'modal-top',
+	                    backdropClass: 'modal-backdrop-soft',
+	                    // sent data to the modal instance (injectable into controller)
+	                    resolve: {
+	                        data: function() {
+	                            return {
+	                                title: 'Search'
+	                            };
+	                        }
+	                    }
+	                });
+
+	                modalSearchInstance.result.then(function( /*data*/ ) {
+	                    // use data from modal here
+	                }, function() {
+	                    // Modal dismissed
+	                });
+	            };
+
+	            // Settings panel (right sidebar)
+	            vm.openModalBar = function() {
+
+	                var modalBarInstance = $uibModal.open({
+	                    animation: true,
+	                    templateUrl: 'app/views/settings.html',
+	                    controller: 'HeaderModalController as mod',
+	                    // position via css class
+	                    windowClass: 'modal-right',
+	                    backdropClass: 'modal-backdrop-soft',
+	                    // sent data to the modal instance (injectable into controller)
+	                    resolve: {
+	                        data: function() {
+	                            return {
+	                                title: 'Settings'
+	                            };
+	                        }
+	                    }
+	                });
+
+	                modalBarInstance.result.then(function( /*data*/ ) {
+	                    // use data from modal here
+	                }, function() {
+	                    // Modal dismissed
+	                });
+	            };
+
+	        }
+	    }
+
+	    HeaderModalController.$inject = ['$uibModalInstance', 'data'];
+
+	    function HeaderModalController($uibModalInstance, data) {
+	        var vm = this;
+
+	        activate();
+
+	        ////////////////
+
+	        function activate() {
+
+	            vm.modalTitle = data.title;
+
+	            vm.close = function() {
+	                $uibModalInstance.close( /* data for promise*/ );
+	            };
+
+	            vm.cancel = function() {
+	                $uibModalInstance.dismiss('cancel');
+	            };
+	        }
+	    }
+
+	    HeaderModalSearchController.$inject = ['$uibModalInstance', '$timeout', 'data'];
+
+	    function HeaderModalSearchController($uibModalInstance, $timeout, data) {
+	        var vm = this;
+
+	        activate();
+
+	        ////////////////
+
+	        function activate() {
+
+	            vm.modalTitle = data.title;
+
+	            // input autofocus
+	            $timeout(function() {
+	                document.querySelector('.header-input-search').focus();
+	            }, 300);
+
+	            vm.close = function() {
+	                $uibModalInstance.close( /* data for promise*/ );
+	            };
+
+	            vm.cancel = function() {
+	                $uibModalInstance.dismiss('cancel');
+	            };
+	        }
+	    }
+
+	})();
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	(function(){
+	    'use strict';
+
+	    angular.module('app.settings',
+	        []);
+	})();
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	(function() {
+	    'use strict';
+
+	    angular
+	        .module('app.settings')
+	        .run(settingsRun);
+
+	    settingsRun.$inject = ['$rootScope'];
+
+	    function settingsRun($rootScope) {
+
+	        var themes = [
+	            'theme-1',
+	            'theme-2',
+	            'theme-3',
+	            'theme-4',
+	            'theme-5',
+	            'theme-6',
+	            'theme-7',
+	            'theme-8',
+	            'theme-9',
+	        ]
+
+	        // Global Settings
+	        // -----------------------------------
+	        $rootScope.app = {
+	            name: 'Anchorage',
+	            description: 'Umbraco Dashboard',
+	            year: ((new Date()).getFullYear()),
+	            layout: {
+	                rtl: false
+	            },
+	            sidebar: {
+	                over: false,
+	                showheader: true,
+	                showtoolbar: true,
+	                offcanvas: false
+	            },
+	            header: {
+	                menulink: 'menu-link-slide'
+	            },
+	            footerHidden: false,
+	            viewAnimation: 'ng-fadeInLeftShort',
+	            theme: themes[0],
+	            currentTheme: 0
+	        };
+
+	        $rootScope.themes = themes;
+
+	    }
+
+	})();
+
+/***/ },
+/* 15 */
 /***/ function(module, exports) {
 
 	/*!

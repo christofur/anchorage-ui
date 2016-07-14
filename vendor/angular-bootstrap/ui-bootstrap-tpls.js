@@ -10,6 +10,7 @@ angular.module('ui.bootstrap.collapse', [])
 
   .directive('uibCollapse', ['$animate', '$q', '$parse', '$injector', function($animate, $q, $parse, $injector) {
     var $animateCss = $injector.has('$animateCss') ? $injector.get('$animateCss') : null;
+
     return {
       link: function(scope, element, attrs) {
         var expandingExpr = $parse(attrs.expanding),
@@ -4106,6 +4107,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.stackedMap'])
     }])
 
   .provider('$uibModal', function() {
+
     var $modalProvider = {
       options: {
         animation: true,

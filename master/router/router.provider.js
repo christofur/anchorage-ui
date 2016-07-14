@@ -19,14 +19,13 @@
             // You may have to set <base> tag in index and a routing configuration in your server
             html5Mode: false,
             // defaults to dashboard
-            defaultRoute: 'dashboard'
+            defaultRoute: 'app/'
         };
 
         // public access to change configuration
         this.configure = function(cfg) {
             angular.extend(config, cfg);
         };
-
 
         $locationProvider.html5Mode(config.html5Mode);
 
@@ -38,9 +37,6 @@
 
         function Router($rootScope, $state, $stateParams, APP_REQUIRES) {
             /* jshint validthis:true */
-
-
-
 
             var service = {
                 // service access level
