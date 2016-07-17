@@ -17,15 +17,21 @@
             vm.items = Menu.getItems();
 
             //Dummy code
-            var menuItem = {
+            Menu.addItem({
                 name: 'Dashboard',
                 sref: 'app.dashboard',
                 order: 1,
                 // iconclass: 'ion-radio-waves',
                 imgpath: 'app/img/icons/radio-waves.svg'
-            };
+            });
 
-            Menu.addItem(menuItem);
+            Menu.addItem({
+                name: 'Realtime Updates',
+                sref: 'app.realtime',
+                order: 2,
+                // iconclass: 'ion-radio-waves',
+                imgpath: 'app/img/icons/radio-waves.svg'
+            });
 
         }
 

@@ -15,6 +15,10 @@ module.exports = {
         './dashboard/dashboard.controller.js',
         './dashboard/dashboard.route.js',
 
+        './realtime/realtime.module.js',
+        './realtime/realtime.controller.js',
+        './realtime/realtime.route.js',
+
         './header/header.module.js',
         './header/header.controller.js',
 

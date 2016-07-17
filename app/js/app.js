@@ -64,7 +64,10 @@
 	__webpack_require__(18);
 	__webpack_require__(19);
 	__webpack_require__(20);
-	module.exports = __webpack_require__(21);
+	__webpack_require__(21);
+	__webpack_require__(22);
+	__webpack_require__(23);
+	module.exports = __webpack_require__(24);
 
 
 /***/ },
@@ -409,13 +412,66 @@
 	(function(){
 	    'use strict';
 
+	    angular
+	        .module('app.realtime', []);
+	})();
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	(function(){
+	    'use strict';
+
+	    angular
+	        .module('app.realtime')
+	        .controller('RealtimeController', RealtimeController);
+
+	    RealtimeController.$inject = ['$scope']
+
+	    function RealtimeController($scope){
+	        var vm = this;
+	    }
+
+	})();
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	(function(){
+	    'use strict';
+
+	    angular
+	        .module('app.realtime')
+	        .run(realtimeRoute);
+
+	    realtimeRoute.$inject = ['Router'];
+
+	    function realtimeRoute(Router){
+
+	        Router.state('app.realtime', {
+	            url: 'realtime/',
+	            title: 'Realtime',
+	            templateUrl: 'realtime.html'
+	        });
+	    }
+	})();
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	(function(){
+	    'use strict';
+
 	    angular.module('app.header',
 	        []);
 
 	})();
 
 /***/ },
-/* 12 */
+/* 15 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -549,7 +605,7 @@
 
 
 /***/ },
-/* 13 */
+/* 16 */
 /***/ function(module, exports) {
 
 	(function(){
@@ -560,7 +616,7 @@
 	})();
 
 /***/ },
-/* 14 */
+/* 17 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -617,7 +673,7 @@
 	})();
 
 /***/ },
-/* 15 */
+/* 18 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -628,7 +684,7 @@
 	})();
 
 /***/ },
-/* 16 */
+/* 19 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -688,7 +744,7 @@
 	})();
 
 /***/ },
-/* 17 */
+/* 20 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -763,7 +819,7 @@
 	})();
 
 /***/ },
-/* 18 */
+/* 21 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -774,7 +830,7 @@
 	})();
 
 /***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -796,15 +852,21 @@
 	            vm.items = Menu.getItems();
 
 	            //Dummy code
-	            var menuItem = {
+	            Menu.addItem({
 	                name: 'Dashboard',
 	                sref: 'app.dashboard',
 	                order: 1,
 	                // iconclass: 'ion-radio-waves',
 	                imgpath: 'app/img/icons/radio-waves.svg'
-	            };
+	            });
 
-	            Menu.addItem(menuItem);
+	            Menu.addItem({
+	                name: 'Realtime Updates',
+	                sref: 'app.realtime',
+	                order: 2,
+	                // iconclass: 'ion-radio-waves',
+	                imgpath: 'app/img/icons/radio-waves.svg'
+	            });
 
 	        }
 
@@ -815,7 +877,7 @@
 	})();
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -857,7 +919,7 @@
 	})();
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports) {
 
 	/*!
@@ -877,6 +939,7 @@
 	            'app.core',
 	            'app.router',
 	            'app.dashboard',
+	            'app.realtime',
 	            'app.header',
 	            'app.settings',
 	            'app.menu'

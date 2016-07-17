@@ -15,6 +15,7 @@
             'app.core',
             'app.router',
             'app.dashboard',
+            'app.realtime',
             'app.header',
             'app.settings',
             'app.menu'
