@@ -67,7 +67,12 @@
 	__webpack_require__(21);
 	__webpack_require__(22);
 	__webpack_require__(23);
-	module.exports = __webpack_require__(24);
+	__webpack_require__(24);
+	__webpack_require__(25);
+	__webpack_require__(26);
+	__webpack_require__(27);
+	__webpack_require__(28);
+	module.exports = __webpack_require__(29);
 
 
 /***/ },
@@ -356,6 +361,101 @@
 /* 8 */
 /***/ function(module, exports) {
 
+	(function() {
+	    'use strict';
+
+	    angular
+	        .module('app.colors', []);
+
+	})();
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	(function() {
+	    'use strict';
+
+	    angular
+	        .module('app.colors')
+	        .constant('APP_COLORS', {
+	            'gray-darker':            '#263238',
+	            'gray-dark':              '#455A64',
+	            'gray':                   '#607D8B',
+	            'gray-light':             '#90A4AE',
+	            'gray-lighter':           '#ECEFF1',
+
+	            'primary':                '#448AFF',
+	            'success':                '#4CAF50',
+	            'info':                   '#03A9F4',
+	            'warning':                '#FFB300',
+	            'danger':                 '#F44336'
+	        })
+	        ;
+	})();
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	(function() {
+	    'use strict';
+
+	    angular
+	        .module('app.core')
+	        .run(colorsRun);
+
+	    colorsRun.$inject = ['$rootScope', 'Colors'];
+
+	    function colorsRun($rootScope, Colors) {
+
+	        // Allows to use branding color with interpolation
+	        // <tag attribute="{{ colorByName('primary') }}" />
+	        $rootScope.colorByName = Colors.byName;
+
+	    }
+
+	})();
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	(function() {
+	    'use strict';
+
+	    angular
+	        .module('app.colors')
+	        .service('Colors', Colors);
+
+	    Colors.$inject = ['APP_COLORS'];
+
+	    function Colors(APP_COLORS) {
+	        this.byName = byName;
+
+	        ////////////////
+
+	        function byName(name) {
+	            var color = APP_COLORS[name];
+	            if (!color && materialColors) {
+	                var c = name.split('-'); // red-500, blue-a100, deepPurple-500, etc
+	                if (c.length)
+	                    color = (materialColors[c[0]] || {})[c[1]];
+	            }
+	            return (color || '#fff');
+	        }
+	    }
+
+	})();
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
 	(function(){
 	    'use strict';
 
@@ -364,7 +464,7 @@
 	})();
 
 /***/ },
-/* 9 */
+/* 13 */
 /***/ function(module, exports) {
 
 	(function(){
@@ -383,7 +483,7 @@
 	})();
 
 /***/ },
-/* 10 */
+/* 14 */
 /***/ function(module, exports) {
 
 	(function(){
@@ -406,37 +506,149 @@
 	})();
 
 /***/ },
-/* 11 */
+/* 15 */
 /***/ function(module, exports) {
 
 	(function(){
 	    'use strict';
 
 	    angular
-	        .module('app.realtime', []);
+	        .module('app.realtime', [
+	            'ngResource',
+	            'app.colors',
+	            'angular-flot'
+	        ]);
 	})();
 
 /***/ },
-/* 12 */
+/* 16 */
 /***/ function(module, exports) {
 
-	(function(){
+	(function() {
+	    'use strict';
+
+	    angular
+	        .module('app.realtime')
+	        .service('RealtimeData', RealtimeData);
+
+	    RealtimeData.$inject = ['$resource'];
+
+	    function RealtimeData($resource) {
+	        this.load = load;
+
+	        ////////////////
+
+	        var opts = {
+	            get: {
+	                method: 'GET',
+	                isArray: true
+	            }
+	        };
+
+	        function load(source) {
+	            return $resource(source, {}, opts).get();
+	        }
+	    }
+	})();
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	(function() {
 	    'use strict';
 
 	    angular
 	        .module('app.realtime')
 	        .controller('RealtimeController', RealtimeController);
 
-	    RealtimeController.$inject = ['$scope']
+	    RealtimeController.$inject = ['$scope', 'RealtimeData', '$timeout', 'Colors'];
 
-	    function RealtimeController($scope){
+	    function RealtimeController($scope, RealtimeData, $timeout, Colors) {
 	        var vm = this;
-	    }
 
+	        activate();
+
+	        ////////////////
+
+	        function activate() {
+
+	            // REALTIME
+	            // -----------------------------------
+	            vm.realTimeOptions = {
+	                series: {
+	                    lines: {
+	                        show: true,
+	                        fill: true,
+	                        fillColor: {
+	                            colors: ['#3F51B5', '#3F51B5']
+	                        }
+	                    },
+	                    shadowSize: 0 // Drawing is faster without shadows
+	                },
+	                grid: {
+	                    show: false,
+	                    borderWidth: 0,
+	                    minBorderMargin: 20,
+	                    labelMargin: 10
+	                },
+	                xaxis: {
+	                    tickFormatter: function() {
+	                        return '';
+	                    }
+	                },
+	                yaxis: {
+	                    min: 0,
+	                    max: 110
+	                },
+	                legend: {
+	                    show: true
+	                },
+	                colors: ['#3F51B5']
+	            };
+
+	            // Generate random data for realtime demo
+	            var data = [],
+	                totalPoints = 300;
+
+	            update();
+
+	            function getRandomData() {
+	                if (data.length > 0)
+	                    data = data.slice(1);
+	                // Do a random walk
+	                while (data.length < totalPoints) {
+	                    var prev = data.length > 0 ? data[data.length - 1] : 50,
+	                        y = prev + Math.random() * 10 - 5;
+	                    if (y < 0) {
+	                        y = 0;
+	                    } else if (y > 100) {
+	                        y = 100;
+	                    }
+	                    data.push(y);
+	                }
+	                // Zip the generated y values with the x values
+	                var res = [];
+	                for (var i = 0; i < data.length; ++i) {
+	                    res.push([i, data[i]]);
+	                }
+	                return [res];
+	            }
+
+	            function update() {
+	                vm.realTimeData = getRandomData();
+	                $timeout(update, 30);
+	            }
+	            // end random data generation
+
+	        }
+	    }
 	})();
 
+
 /***/ },
-/* 13 */
+/* 18 */
 /***/ function(module, exports) {
 
 	(function(){
@@ -459,7 +671,7 @@
 	})();
 
 /***/ },
-/* 14 */
+/* 19 */
 /***/ function(module, exports) {
 
 	(function(){
@@ -471,7 +683,7 @@
 	})();
 
 /***/ },
-/* 15 */
+/* 20 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -605,7 +817,7 @@
 
 
 /***/ },
-/* 16 */
+/* 21 */
 /***/ function(module, exports) {
 
 	(function(){
@@ -616,7 +828,7 @@
 	})();
 
 /***/ },
-/* 17 */
+/* 22 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -673,7 +885,7 @@
 	})();
 
 /***/ },
-/* 18 */
+/* 23 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -684,7 +896,7 @@
 	})();
 
 /***/ },
-/* 19 */
+/* 24 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -744,7 +956,7 @@
 	})();
 
 /***/ },
-/* 20 */
+/* 25 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -819,7 +1031,7 @@
 	})();
 
 /***/ },
-/* 21 */
+/* 26 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -830,7 +1042,7 @@
 	})();
 
 /***/ },
-/* 22 */
+/* 27 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -877,7 +1089,7 @@
 	})();
 
 /***/ },
-/* 23 */
+/* 28 */
 /***/ function(module, exports) {
 
 	(function () {
@@ -919,7 +1131,7 @@
 	})();
 
 /***/ },
-/* 24 */
+/* 29 */
 /***/ function(module, exports) {
 
 	/*!

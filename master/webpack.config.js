@@ -11,11 +11,17 @@ module.exports = {
         './core/core.config.js',
         './core/core.route.js',
 
+        './colors/colors.module.js',
+        './colors/colors.constant.js',
+        './colors/colors.run.js',
+        './colors/colors.service.js',
+
         './dashboard/dashboard.module.js',
         './dashboard/dashboard.controller.js',
         './dashboard/dashboard.route.js',
 
         './realtime/realtime.module.js',
+        './realtime/realtime.DataService.js',
         './realtime/realtime.controller.js',
         './realtime/realtime.route.js',
 

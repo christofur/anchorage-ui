@@ -2,5 +2,9 @@
     'use strict';
 
     angular
-        .module('app.realtime', []);
+        .module('app.realtime', [
+            'ngResource',
+            'app.colors',
+            'angular-flot'
+        ]);
 })();
